@@ -10,6 +10,7 @@ WHERE ep.hiredate < (
 );
 ```
 ![image](https://github.com/l3043Y/auppcloudcomputing/assets/20104217/8076f76d-2c3b-4543-bccc-d276f1faf76d)
+
 2. List the emps of deptno 20 whose jobs are same as deptno 10
 ```sql
 SELECT gp1.* 
@@ -34,7 +35,7 @@ ORDER BY gp1.sal DESC
 ```
 ![image](https://github.com/l3043Y/auppcloudcomputing/assets/20104217/b324e53d-9b58-46e5-b8b0-9bae57bea683)
 
-4. List the emps whose Jobs are same as MILLER or Sal is more than   ALLEN. 
+4. List the emps whose Jobs are same as MILLER or Sal is more than ALLEN. 
 ```sql
 SELECT * 
 FROM emp gp1
@@ -51,6 +52,7 @@ WHERE
   );
 ```
 ![image](https://github.com/l3043Y/auppcloudcomputing/assets/20104217/5b5b20e0-68ff-477e-9576-a02b8d1423db)
+
 5. List the emps whose Sal is > the total remuneration of the   SALESMAN. ???
 ```sql
 SELECT * 
@@ -114,8 +116,12 @@ WHERe emp1.job = "MANAGER"
 ![image](https://github.com/l3043Y/auppcloudcomputing/assets/20104217/969bb5ae-9c12-451e-9cc4-37c0d6ca9a3a)
 10. Find the total annual sal to distribute job wise ??/
 ```sql
-
+SELECT ep.job, SUM(ep.sal)
+FROM emp ep
+GROUP by ep.job
 ```
+![image](https://github.com/l3043Y/auppcloudcomputing/assets/20104217/371a603c-f823-45a9-88e9-064a6e079f7f)
+
 11. List the emps who are not working in sales dept 
 ```sql
 WITH tmp as (
@@ -143,10 +149,36 @@ WHERE
 
 13. List the emps who are senior to most recently hired emp who is   working under Mgr KING 
 ```sql
-
+SELECT * 
+FROM emp ep
+where ep.hiredate < (
+  SELECT ep1.hiredate
+  FROM emp ep1
+  WHERE ep1.mgr = (
+  	SELECT ep2.empno
+    FROM emp ep2
+    WHERE ep2.ename = 'KING'
+  )
+  ORDER BY hiredate DESC
+  LIMIT 1
+);
 ```
-14. Display the details of most senior employee belongs to 1981. 15. Display the number of emps for each job group by deptno wise.
+![image](https://github.com/l3043Y/auppcloudcomputing/assets/20104217/cd6d5711-0a83-439f-b93e-83da2990d877)
+14. Display the details of most senior employee belongs to 1981. 
 ```sql
-
+SELECT *
+FROM emp ep
+WHERE strftime("%Y",ep.hiredate) = '1981'
+ORDEr BY ep.hiredate ASC
+LIMIT 1
 ```
+![image](https://github.com/l3043Y/auppcloudcomputing/assets/20104217/ed9247da-6599-4546-8a7b-58e21f82ee50)
+15. Display the number of emps for each job group by deptno wise.
+```sql
+SELECT ep.deptno, COUNT(*) as cnt
+FROM emp ep
+GROUP by ep.deptno
+```
+![image](https://github.com/l3043Y/auppcloudcomputing/assets/20104217/ac5f25e1-24c1-4d1d-ab44-0202338cffcc)
+
 
