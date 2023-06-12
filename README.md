@@ -1,4 +1,4 @@
-# auppcloudcomputing
+# Assignment 2
 1. List the emps who are senior to their own MGRs
 ```sql
 SELECT * 
